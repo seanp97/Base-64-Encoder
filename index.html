@@ -41,6 +41,7 @@
         try {
             const file = element.files[0];
             const reader = new FileReader();
+            document.querySelector('#Base64Output').value = 'Loading...';
             reader.onloadend = function() {
             //console.log('RESULT', reader.result)
             document.querySelector('#Base64Output').value = reader.result;
