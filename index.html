@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base 64</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="filePicker">
+            <input type="file" onchange="encodeImageFileAsURL(this)" />
+        </div>
+        <div class="base64Textarea">
+            <textarea id="Base64Output"></textarea>
+        </div>
+        <div>
+            <button id="Base64Result">Copy Base64</button>
+        </div>
+    </div>
+
+
+    <style>
+        .filePicker,
+        .base64Textarea  {
+            margin-bottom: 10px;
+        }
+
+        .base64Textarea textarea {
+            resize: none;
+            width: 300px;
+            height: 200px;
+            overflow-x: hidden;
+        }
+    </style>
+
+    
+<script>
+    const encodeImageFileAsURL = (element) => {
+        try {
+            const file = element.files[0];
+            const reader = new FileReader();
+            reader.onloadend = function() {
+            //console.log('RESULT', reader.result)
+            document.querySelector('#Base64Output').value = reader.result;
+            }
+            reader.readAsDataURL(file);
+            
+        }
+        catch(ex) {
+            console.log(ex);
+        }
+
+    }
+
+    const GetBase64 = () => {
+        document.querySelector('#Base64Result').addEventListener('click', () => {
+            const base64Result = document.querySelector('#Base64Output').value;
+            if(base64Result != "" || base64Result != undefined || base64Result != null) {
+                navigator.clipboard.writeText(base64Result).then(() => {
+                    alert("Copied to clipboard");
+                    document.querySelector('#Base64Output').value = '';
+                });
+            }
+        })
+    }
+
+    GetBase64();
+</script>
+
+</body>
+</html>
